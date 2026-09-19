@@ -63,3 +63,40 @@ export function projectMaintenance(args: {
     status,
   };
 }
+
+export function buildWaAlertMessage(v: { name: string; plate: string; brand: string; model: string; year: number; currentKm: number; hullNumber?: string; category?: string }, p: MaintenanceProjection): string {
+  const isOverdue = p.status === 'OVERDUE';
+  const icon = isOverdue ? '🚨 [TERLAMBAT / BREAKDOWN]' : '⚠️ [PERINGATAN MAINTENANCE]';
+  const statusLabel = isOverdue ? 'TERLAMBAT' : 'PERINGATAN';
+  const sisaKm = p.remainingKm < 0
+    ? `Lewat ${Math.abs(p.remainingKm).toLocaleString('id-ID')} KM`
+    : `${p.remainingKm.toLocaleString('id-ID')} KM`;
+  const sisaWaktu = p.remainingDays < 0
+    ? `Lewat ${Math.abs(p.remainingDays)} hari`
+    : `${p.remainingDays} hari lagi`;
+
+  const lines = [
+    `${icon} *${statusLabel} MAINTENANCE ARMADA*`,
+    ``,
+    `Unit: *${v.name}*`,
+    v.hullNumber ? `No Lambung: *${v.hullNumber}*` : null,
+    `Plat/Kode: ${v.plate}`,
+    `Kategori: ${v.category || 'Alat-Alat Besar (A2B)'}`,
+    `Merek/Model: ${v.brand} ${v.model} (${v.year})`,
+    ``,
+    `📊 *Kondisi Odometer & Target:*`,
+    `• Odometer Saat Ini: ${v.currentKm.toLocaleString('id-ID')} KM`,
+    `• Target Servis: ${p.targetKm.toLocaleString('id-ID')} KM`,
+    `• Sisa Jarak: ${sisaKm}`,
+    `• Sisa Waktu: ${sisaWaktu}`,
+    `• Rata-rata Pemakaian: ${p.averageKmPerDay ? Math.round(p.averageKmPerDay) + ' KM/hari' : '-'}`,
+    ``,
+    `Segera jadwalkan inspeksi & perawatan unit ini untuk mencegah kerusakan lebih lanjut.`
+  ].filter(Boolean);
+
+  return encodeURIComponent(lines.join('\n'));
+}
+
+export function getWaAlertUrl(v: { name: string; plate: string; brand: string; model: string; year: number; currentKm: number; hullNumber?: string; category?: string }, p: MaintenanceProjection): string {
+  return `https://wa.me/?text=${buildWaAlertMessage(v, p)}`;
+}

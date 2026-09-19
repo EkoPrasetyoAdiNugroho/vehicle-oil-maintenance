@@ -19,11 +19,12 @@ import {
   CheckCircle2,
   AlertOctagon,
   RotateCcw,
+  MessageCircle,
 } from 'lucide-react';
 import StatusBadge from '@/components/StatusBadge';
 import VehicleForm from '@/components/VehicleForm';
 import { maintenanceRecords, odometerHistory, rules, vehicles as seedVehicles } from '@/lib/demo-data';
-import { projectMaintenance } from '@/lib/maintenance';
+import { projectMaintenance, getWaAlertUrl } from '@/lib/maintenance';
 import { Vehicle } from '@/lib/types';
 
 function VehiclesContent() {
@@ -291,7 +292,7 @@ function VehiclesContent() {
                 <th style={{ width: '170px' }}>Target Servis Berikut</th>
                 <th style={{ width: '150px' }}>Sisa KM / Hari</th>
                 <th style={{ width: '120px' }}>Pemakaian/Hari</th>
-                <th style={{ width: '160px', textAlign: 'center' }}>Aksi</th>
+                <th style={{ width: '250px', textAlign: 'center' }}>Aksi & Notifikasi</th>
               </tr>
             </thead>
             <tbody>
@@ -301,6 +302,7 @@ function VehiclesContent() {
                   month: 'short',
                   year: 'numeric',
                 });
+                const showWaAlert = p.status === 'WARNING' || p.status === 'OVERDUE';
                 return (
                   <tr key={v.id}>
                     <td>
@@ -391,6 +393,18 @@ function VehiclesContent() {
                         >
                           <Trash2 size={12} />
                         </button>
+                        {showWaAlert && (
+                          <a
+                            href={getWaAlertUrl(v, p)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`waAlertBtn dense ${p.status === 'OVERDUE' ? 'overdue' : ''}`}
+                            title={`Kirim WhatsApp Alert untuk unit ${v.name}`}
+                          >
+                            <MessageCircle size={13} />
+                            <span>WhatsApp Alert</span>
+                          </a>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -460,6 +474,22 @@ function VehiclesContent() {
                     </span>
                   </div>
                 </div>
+
+                {/* Conditional WhatsApp Alert Button for Warning / Breakdown */}
+                {(p.status === 'WARNING' || p.status === 'OVERDUE') && (
+                  <div style={{ padding: '0 18px 12px' }}>
+                    <a
+                      href={getWaAlertUrl(v, p)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`waAlertBtn waAlertBtnFull ${p.status === 'OVERDUE' ? 'overdue' : ''}`}
+                      title={`Kirim notifikasi WhatsApp maintenance untuk ${v.name}`}
+                    >
+                      <MessageCircle size={16} />
+                      <span>WhatsApp Alert</span>
+                    </a>
+                  </div>
+                )}
 
                 {/* Tactile Skeuomorphic Button Footer */}
                 <div className="techCardFooter">

@@ -21,7 +21,7 @@ import A2BReadinessDonut from '@/components/A2BReadinessDonut';
 import AirportWeatherClock from '@/components/AirportWeatherClock';
 import A2BCategoryCards from '@/components/A2BCategoryCards';
 import { maintenanceRecords, odometerHistory, rules, vehicles } from '@/lib/demo-data';
-import { projectMaintenance } from '@/lib/maintenance';
+import { projectMaintenance, getWaAlertUrl } from '@/lib/maintenance';
 import { MaintenanceProjection } from '@/lib/types';
 
 export default function DashboardPage() {
@@ -204,27 +204,40 @@ export default function DashboardPage() {
               </p>
             ) : (
               urgent.map(({ v, p }) => (
-                <Link className="priorityRow" href={`/vehicles/${v.id}`} key={v.id}>
-                  <div className="priorityIcon">
-                    <Wrench size={17} />
-                  </div>
-                  <div className="grow">
-                    <strong>
-                      {v.hullNumber ? `[${v.hullNumber}] ` : ''}{v.name}
-                    </strong>
-                    <span>
-                      {v.plate} • {v.currentKm.toLocaleString('id-ID')} KM • {v.category || 'A2B'}
-                    </span>
-                  </div>
-                  <div className="alignRight">
-                    <StatusBadge status={p.status} />
-                    <small>
-                      {p.remainingKm < 0
-                        ? `Lewat ${Math.abs(p.remainingKm).toLocaleString('id-ID')} KM`
-                        : `Sisa ${p.remainingKm.toLocaleString('id-ID')} KM (${p.remainingDays} hari)`}
-                    </small>
-                  </div>
-                </Link>
+                <div key={v.id} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Link className="priorityRow" href={`/vehicles/${v.id}`} style={{ flex: 1, minWidth: 0 }}>
+                    <div className="priorityIcon">
+                      <Wrench size={17} />
+                    </div>
+                    <div className="grow">
+                      <strong>
+                        {v.hullNumber ? `[${v.hullNumber}] ` : ''}{v.name}
+                      </strong>
+                      <span>
+                        {v.plate} • {v.currentKm.toLocaleString('id-ID')} KM • {v.category || 'A2B'}
+                      </span>
+                    </div>
+                    <div className="alignRight">
+                      <StatusBadge status={p.status} />
+                      <small>
+                        {p.remainingKm < 0
+                          ? `Lewat ${Math.abs(p.remainingKm).toLocaleString('id-ID')} KM`
+                          : `Sisa ${p.remainingKm.toLocaleString('id-ID')} KM (${p.remainingDays} hari)`}
+                      </small>
+                    </div>
+                  </Link>
+                  <a
+                    href={getWaAlertUrl(v, p)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`waAlertBtn dense ${p.status === 'OVERDUE' ? 'overdue' : ''}`}
+                    title={`Kirim WhatsApp Alert untuk ${v.name}`}
+                    style={{ flexShrink: 0, height: '36px' }}
+                  >
+                    <MessageCircle size={14} />
+                    <span className="hideOnMobile">WhatsApp Alert</span>
+                  </a>
+                </div>
               ))
             )}
           </div>

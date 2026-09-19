@@ -2,12 +2,12 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, CalendarDays, Gauge, Wrench, TrendingUp, Clock3, Droplets, Save, RotateCcw } from 'lucide-react';
+import { ArrowLeft, CalendarDays, Gauge, Wrench, TrendingUp, Clock3, Droplets, Save, RotateCcw, MessageCircle } from 'lucide-react';
 import StatusBadge from '@/components/StatusBadge';
 import WeeklyChecklist from '@/components/WeeklyChecklist';
 import RulesManager from '@/components/RulesManager';
 import { maintenanceRecords as seedMaintenance, odometerHistory as seedHistory, rules, vehicles, weeklyChecklistRules, weeklyChecklistEntries as seedChecklistEntries, customRules as seedCustomRules } from '@/lib/demo-data';
-import { projectMaintenance } from '@/lib/maintenance';
+import { projectMaintenance, getWaAlertUrl } from '@/lib/maintenance';
 import { MaintenanceRecord, OdometerEntry, WeeklyChecklistEntry, CustomRule, DayOfWeek } from '@/lib/types';
 
 function getWeekStart(date: Date): string {
@@ -49,7 +49,29 @@ export default function VehicleDetailPage(){
   }
 
   return <div className="page"><Link href="/vehicles" className="backLink"><ArrowLeft size={16}/>Kembali ke kendaraan</Link>
-    <header className="detailHero"><div className="detailPhoto">{vehicle.brand}</div><div className="grow"><p className="eyebrow">DETAIL KENDARAAN</p><h1>{vehicle.name}</h1><p>{vehicle.plate} • {vehicle.brand} {vehicle.model} • {vehicle.year}</p></div><StatusBadge status={p.status}/></header>
+    <header className="detailHero">
+      <div className="detailPhoto">{vehicle.brand}</div>
+      <div className="grow">
+        <p className="eyebrow">DETAIL KENDARAAN</p>
+        <h1>{vehicle.name}</h1>
+        <p>{vehicle.plate} • {vehicle.brand} {vehicle.model} • {vehicle.year}</p>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' }}>
+        <StatusBadge status={p.status}/>
+        {(p.status === 'WARNING' || p.status === 'OVERDUE') && (
+          <a
+            href={getWaAlertUrl(vehicle, p)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`waAlertBtn ${p.status === 'OVERDUE' ? 'overdue' : ''}`}
+            title={`Kirim notifikasi WhatsApp maintenance untuk ${vehicle.name}`}
+          >
+            <MessageCircle size={15} />
+            <span>WhatsApp Alert</span>
+          </a>
+        )}
+      </div>
+    </header>
     <section className="detailStats"><div><Gauge/><span>Odometer</span><strong>{currentKm.toLocaleString('id-ID')} KM</strong></div><div><Wrench/><span>Target KM</span><strong>{p.targetKm.toLocaleString('id-ID')} KM</strong></div><div><CalendarDays/><span>Target Tanggal</span><strong>{new Date(p.targetDate).toLocaleDateString('id-ID')}</strong></div><div><Clock3/><span>Driver Utama</span><strong>{p.trigger==='KM'?'Kilometer':p.trigger==='TIME'?'Waktu':'Belum cukup data'}</strong></div></section>
 
     {/* Weekly Checklist */}
