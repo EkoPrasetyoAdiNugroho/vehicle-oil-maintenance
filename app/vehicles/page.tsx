@@ -485,7 +485,7 @@ function VehiclesContent() {
                       Target Servis: <strong>{p.targetKm.toLocaleString('id-ID')} KM</strong>
                     </span>
                     <span>
-                      Jatuh Tempo: <strong>{targetDateFormatted}</strong>
+                      Batas Waktu: <strong>{targetDateFormatted}</strong>
                     </span>
                   </div>
                 </div>

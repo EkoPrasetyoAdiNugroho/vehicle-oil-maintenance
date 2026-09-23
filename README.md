@@ -5,7 +5,7 @@ Prototype web app responsive untuk preventive maintenance kendaraan operasional.
 ## Fokus versi ini
 
 - Dashboard operasional dengan prioritas maintenance yang jelas
-- Status: Aman, Peringatan, Jatuh Tempo, Terlambat
+- Status: Aman, Peringatan, Waktunya Servis, Terlambat
 - Maintenance ganti oli berbasis **KM + waktu** (mana yang tercapai lebih dulu)
 - Input odometer manual + validasi KM tidak boleh turun
 - Rolling average pemakaian KM/hari dari histori odometer

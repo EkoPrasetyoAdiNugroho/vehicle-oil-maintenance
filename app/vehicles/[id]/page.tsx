@@ -329,9 +329,11 @@ export default function VehicleDetailPage() {
         </div>
         <div>
           <CalendarDays />
-          <span>Target Tanggal</span>
+          <span>Prediksi Tanggal Servis</span>
           <strong>
-            {new Date(p.targetDate).toLocaleDateString('id-ID', {
+            {new Date(
+              p.trigger === 'KM' && p.estimatedDateByKm ? p.estimatedDateByKm : p.targetDate
+            ).toLocaleDateString('id-ID', {
               day: 'numeric',
               month: 'short',
               year: 'numeric',
@@ -342,7 +344,7 @@ export default function VehicleDetailPage() {
           <Clock3 />
           <span>Driver Batas Utama</span>
           <strong>
-            {p.trigger === 'KM' ? 'Kilometer' : p.trigger === 'TIME' ? 'Waktu (Hari)' : 'Belum cukup data'}
+            {p.trigger === 'KM' ? 'Kilometer (Jarak)' : p.trigger === 'TIME' ? 'Waktu (Kalender)' : 'Belum cukup data'}
           </strong>
         </div>
       </section>
@@ -401,7 +403,7 @@ export default function VehicleDetailPage() {
           <div className="prediction">
             <div>
               <span>Sisa Jarak (KM)</span>
-              <strong style={{ color: p.remainingKm < 0 ? 'var(--red)' : p.status === 'WARNING' ? 'var(--orange)' : 'var(--text)' }}>
+              <strong style={{ color: p.remainingKm < 0 ? 'var(--red)' : p.status === 'WARNING' ? 'var(--orange)' : 'var(--green)' }}>
                 {p.remainingKm < 0
                   ? `Lewat ${Math.abs(p.remainingKm).toLocaleString('id-ID')} KM`
                   : `${p.remainingKm.toLocaleString('id-ID')} KM`}
@@ -415,7 +417,7 @@ export default function VehicleDetailPage() {
               <strong style={{ color: p.remainingDays < 0 ? 'var(--red)' : p.remainingDays <= rule.warningDays ? 'var(--orange)' : 'var(--text)' }}>
                 {p.remainingDays < 0
                   ? `Lewat ${Math.abs(p.remainingDays)} hari`
-                  : `${p.remainingDays} hari`}
+                  : `${p.remainingDays} hari lagi`}
               </strong>
               <small style={{ fontSize: '11px', color: 'var(--teal)', display: 'block', marginTop: '2px' }}>
                 Realtime dari pengisian oli
@@ -431,25 +433,27 @@ export default function VehicleDetailPage() {
               </small>
             </div>
             <div>
-              <span>Estimasi Jatuh Tempo</span>
+              <span>Estimasi Waktu Ganti Oli</span>
               <strong style={{ color: p.status === 'OVERDUE' ? 'var(--red)' : p.status === 'WARNING' ? 'var(--orange)' : 'var(--text)' }}>
                 {p.status === 'OVERDUE'
-                  ? 'Sudah Lewat Jadwal'
+                  ? 'Perlu Servis Segera'
                   : p.estimatedDaysByKm !== null && p.trigger === 'KM'
                   ? `~${p.estimatedDaysByKm} hari lagi`
                   : `${Math.max(0, p.remainingDays)} hari lagi`}
               </strong>
               <small style={{ fontSize: '11px', color: 'var(--muted)', display: 'block', marginTop: '2px' }}>
-                {p.trigger === 'KM' ? '⚡ Batas KM tercapai lebih dulu' : '📅 Batas kalender tercapai lebih dulu'}
+                {p.trigger === 'KM'
+                  ? `⚡ Jarak tinggal ${p.remainingKm.toLocaleString('id-ID')} KM`
+                  : `📅 Batas usia oli ${p.remainingDays} hari`}
               </small>
             </div>
             <div className="predictionNote">
               Batas yang diperkirakan tercapai lebih dulu:{' '}
               <b>
-                {p.trigger === 'KM' ? 'kilometer pemakaian' : p.trigger === 'TIME' ? 'waktu kalender oli' : 'belum diketahui'}
+                {p.trigger === 'KM' ? 'kilometer pemakaian' : p.trigger === 'TIME' ? 'waktu kalender oli' : 'jarak KM'}
               </b>
               {p.trigger === 'KM' && p.estimatedDaysByKm !== null
-                ? ` (~${p.estimatedDaysByKm} hari lagi karena unit aktif beroperasi).`
+                ? ` (sisa ${p.remainingKm.toLocaleString('id-ID')} KM diperkirakan tercapai ~${p.estimatedDaysByKm} hari lagi dengan pemakaian rata-rata ${p.averageKmPerDay ? Math.round(p.averageKmPerDay) : '-'} KM/hari).`
                 : ` (${p.remainingDays} hari batas usia pelumasan).`}
             </div>
           </div>
