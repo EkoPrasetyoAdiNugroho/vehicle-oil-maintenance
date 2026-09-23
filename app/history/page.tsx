@@ -152,23 +152,21 @@ export default function HistoryPage() {
     <div className="page historyPage">
       {/* Printable Report Header (Visible only when printing/exporting to PDF) */}
       <div className="printOnly printHeader">
-        <div className="printHeaderTop">
-          <div>
-            <h2>AIRPORT MECHANICAL — BANDAR UDARA BINAKA</h2>
-            <p>SISTEM PREVENTIVE MAINTENANCE & LOG KESIAPAN OPERASIONAL ARMADA</p>
-          </div>
-          <div className="printMeta">
-            <p><strong>Tanggal Dokumen:</strong> {nowFormatted}</p>
-            <p><strong>Filter Periode:</strong> {getTimeRangeLabel(timeRange)}</p>
-            <p><strong>Dicetak Oleh:</strong> Operator On-Duty</p>
-          </div>
+        <div className="printHeaderGov">
+          <h3>KEMENTERIAN PERHUBUNGAN</h3>
+          <h4>DIREKTORAT JENDERAL PERHUBUNGAN UDARA</h4>
+          <h5>KANTOR UPBU KELAS III BANDAR UDARA NAMNIWEL</h5>
+          <p className="printSubDept">UNIT TEKNIK & PEMELIHARAAN ALAT-ALAT BESAR (A2B)</p>
         </div>
         <hr className="printDivider" />
-        <div className="printSummary">
-          <span><strong>Total Aktivitas:</strong> {stats.total} Catatan</span> |{' '}
-          <span><strong>Ganti/Tambah Oli:</strong> {stats.oilChanges}</span> |{' '}
-          <span><strong>Update Odometer:</strong> {stats.odoUpdates}</span> |{' '}
-          <span><strong>Inspeksi Mingguan:</strong> {stats.checklists}</span>
+        <div className="printDocTitleBlock">
+          <h2>LAPORAN RIWAYAT PEMELIHARAAN & OPERASIONAL KENDARAAN</h2>
+          <div className="printDocMetaGrid">
+            <span><strong>Bandara:</strong> Namniwel (WAPG / NRE)</span>
+            <span><strong>Periode:</strong> {getTimeRangeLabel(timeRange)}</span>
+            <span><strong>Tanggal Cetak:</strong> {nowFormatted}</span>
+            <span><strong>Total Data:</strong> {filteredActivities.length} Baris</span>
+          </div>
         </div>
       </div>
 
@@ -238,8 +236,8 @@ export default function HistoryPage() {
         </span>
       </section>
 
-      {/* Stats Cards (Screen & Print) */}
-      <section className="statsGrid historyStatsGrid">
+      {/* Stats Cards (Screen Only - Hidden on Print) */}
+      <section className="statsGrid historyStatsGrid noPrint">
         <div className="statCard">
           <div>
             <History size={20} />
@@ -446,7 +444,7 @@ export default function HistoryPage() {
             <p>Dicatat & Dilaporkan Oleh:</p>
             <div className="signatureSpace" />
             <strong>Petugas Operator Lapangan</strong>
-            <span>Bandar Udara Binaka</span>
+            <span>Bandar Udara Namniwel</span>
           </div>
           <div className="signatureBox">
             <p>Diperiksa & Disetujui Oleh:</p>
@@ -456,7 +454,7 @@ export default function HistoryPage() {
           </div>
         </div>
         <p className="printDisclaimer">
-          Laporan ini dicetak secara otomatis dari Sistem Preventive Maintenance Kendaraan Operasional.
+          Dokumen resmi Laporan Pemeliharaan Kendaraan Operasional — UPBU Kelas III Bandar Udara Namniwel.
         </p>
       </div>
     </div>

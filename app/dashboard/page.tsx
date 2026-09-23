@@ -135,13 +135,17 @@ export default function DashboardPage() {
               <AlertOctagon size={16} /> Laporkan Kerusakan
             </button>
             <a
-              className="secondaryButton"
-              href="https://api.whatsapp.com/send?text=Hallo%20Airport%20Mechanical%20Status"
+              className="whatsappHeaderBtn"
+              href="https://api.whatsapp.com/send?text=Halo%20Mekanik%20Bandara%20Namniwel%2C%20mohon%20info%20status%20armada%20A2B."
               target="_blank"
               rel="noopener noreferrer"
-              style={{ textDecoration: 'none' }}
+              title="Hubungi Mekanik via WhatsApp (Chat Only)"
             >
-              <MessageCircle size={16} /> WhatsApp Alert
+              <MessageCircle size={18} />
+              <div className="waBtnText">
+                <span className="waBtnTitle">WhatsApp</span>
+                <span className="waBtnSub">(Chat only)</span>
+              </div>
             </a>
           </div>
         </GreetingHeader>

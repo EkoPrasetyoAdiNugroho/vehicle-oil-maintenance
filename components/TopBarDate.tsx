@@ -33,19 +33,20 @@ export default function TopBarDate() {
   });
 
   const timeStr = time.toLocaleTimeString('id-ID', {
+    timeZone: 'Asia/Jayapura',
     hour: '2-digit',
     minute: '2-digit',
   });
 
   return (
-    <div className="topBarDate" title="Tanggal & Waktu Operasional">
+    <div className="topBarDate" title="Tanggal & Waktu Operasional (WIT)">
       <span className="topBarDateBadge">
         <Calendar size={13} />
         <span>{dateStr}</span>
       </span>
       <span className="topBarTimeBadge">
         <Clock size={13} />
-        <span>{timeStr} WIB</span>
+        <span>{timeStr} WIT</span>
       </span>
     </div>
   );

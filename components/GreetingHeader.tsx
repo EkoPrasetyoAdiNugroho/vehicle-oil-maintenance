@@ -82,11 +82,12 @@ export default function GreetingHeader({ userName = 'Operator', children }: Gree
 
   const formattedTime = mounted && currentTime
     ? currentTime.toLocaleTimeString('id-ID', {
+        timeZone: 'Asia/Jayapura',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-      }) + ' WIB'
-    : '--:--:-- WIB';
+      }) + ' WIT'
+    : '--:--:-- WIT';
 
   return (
     <div className="greetingCard">

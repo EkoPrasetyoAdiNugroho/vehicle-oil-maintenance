@@ -22,7 +22,7 @@ export default function Sidebar() {
       <div className="sideFeature">
         <ShieldCheck size={18}/><div><strong>Preventive Care</strong><span>KM + waktu dipantau bersamaan</span></div>
       </div>
-      <div className="sidebarFoot"><small>MSBU GROUP</small><strong>Bandar Udara Binaka</strong><span>Prototype • Supabase Ready</span></div>
+      <div className="sidebarFoot"><small>MSBU GROUP</small><strong>Bandar Udara Namniwel</strong><span>Prototype • Supabase Ready</span></div>
     </aside>
     <nav className="mobileNav">
       {items.map(({href,label,icon:Icon}) => <Link key={href} href={href} className={path.startsWith(href) ? 'mobileNavItem active' : 'mobileNavItem'}><Icon size={20}/><span>{label}</span></Link>)}

@@ -53,7 +53,7 @@ html{color-scheme:light}html[data-theme='dark']{color-scheme:dark}a{color:inheri
 .pageHeader p,.detailHero p{color:var(--muted);margin:0;max-width:720px;line-height:1.55;font-size:15px}
 .eyebrow{font-size:12px!important;letter-spacing:.15em;font-weight:850;color:var(--teal)!important;margin:0 0 6px!important}
 .headerActions{display:flex;gap:10px}
-/* ===== Light Skeuomorphism Buttons for Field Technicians ===== */
+/* ===== Smooth Light Skeuomorphism Buttons ===== */
 .primaryButton,
 .secondaryButton,
 .skeuoBtnPrimary,
@@ -65,13 +65,13 @@ html{color-scheme:light}html[data-theme='dark']{color-scheme:dark}a{color:inheri
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 11px 18px;
-  border-radius: 11px;
+  padding: 10px 18px;
+  border-radius: 12px;
   font-weight: 750;
-  font-size: 14px;
+  font-size: 13.5px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.15s ease, background 0.15s ease;
   letter-spacing: -0.01em;
   text-decoration: none;
 }
@@ -79,24 +79,27 @@ html{color-scheme:light}html[data-theme='dark']{color-scheme:dark}a{color:inheri
 .primaryButton,
 .skeuoBtnPrimary {
   background: linear-gradient(180deg, #174567 0%, #0b2942 100%);
-  color: #ffffff;
+  color: #ffffff !important;
   border: 1px solid #061c2d;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28),
               0 3px 0 #051624,
-              0 5px 12px rgba(11, 41, 66, 0.25);
+              0 4px 10px rgba(11, 41, 66, 0.22);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 .primaryButton:hover,
 .skeuoBtnPrimary:hover {
-  background: linear-gradient(180deg, #1d5277 0%, #0e3454 100%);
-  filter: brightness(1.05);
+  background: linear-gradient(180deg, #1e567f 0%, #0e3759 100%);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+              0 4px 0 #051624,
+              0 6px 14px rgba(11, 41, 66, 0.3);
 }
 .primaryButton:active,
 .skeuoBtnPrimary:active {
   transform: translateY(2px);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4),
               0 1px 0 #051624,
-              0 2px 4px rgba(11, 41, 66, 0.2);
+              0 2px 4px rgba(11, 41, 66, 0.15);
 }
 
 .secondaryButton,
@@ -104,47 +107,109 @@ html{color-scheme:light}html[data-theme='dark']{color-scheme:dark}a{color:inheri
   background: linear-gradient(180deg, #ffffff 0%, #f0f4f7 100%);
   color: #172633;
   border: 1px solid #c5d3dc;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95),
               0 3px 0 #b2c3ce,
-              0 4px 10px rgba(0, 0, 0, 0.06);
+              0 4px 8px rgba(0, 0, 0, 0.05);
 }
 html[data-theme='dark'] .secondaryButton,
 html[data-theme='dark'] .skeuoBtnSecondary {
   background: linear-gradient(180deg, #243542 0%, #17232c 100%);
   color: #e9f0f4;
   border-color: #3b4e5b;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
               0 3px 0 #0c141a,
-              0 5px 12px rgba(0, 0, 0, 0.3);
+              0 5px 12px rgba(0, 0, 0, 0.25);
 }
 .secondaryButton:hover,
 .skeuoBtnSecondary:hover {
   background: linear-gradient(180deg, #ffffff 0%, #e6edf2 100%);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1),
+              0 4px 0 #b2c3ce,
+              0 6px 12px rgba(0, 0, 0, 0.08);
 }
 .secondaryButton:active,
 .skeuoBtnSecondary:active {
   transform: translateY(2px);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1),
               0 1px 0 #b2c3ce,
-              0 2px 4px rgba(0, 0, 0, 0.04);
+              0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
 .skeuoDangerBtn {
   background: linear-gradient(180deg, #e5483d 0%, #ba2b21 100%);
-  color: #ffffff;
+  color: #ffffff !important;
   border: 1px solid #911d15;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
               0 3px 0 #73150e,
-              0 5px 12px rgba(229, 72, 61, 0.28);
+              0 4px 10px rgba(229, 72, 61, 0.25);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 .skeuoDangerBtn:hover {
   background: linear-gradient(180deg, #f05247 0%, #c73127 100%);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+              0 4px 0 #73150e,
+              0 6px 14px rgba(229, 72, 61, 0.35);
 }
 .skeuoDangerBtn:active {
   transform: translateY(2px);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4),
               0 1px 0 #73150e;
+}
+
+/* WhatsApp Header Button (Vibrant Green with Smooth Skeuomorphic Depth) */
+.whatsappHeaderBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(180deg, #25D366 0%, #1ea952 100%);
+  color: #ffffff !important;
+  border: 1px solid #1a9648;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
+              0 3px 0 #126e34,
+              0 5px 14px rgba(37, 211, 102, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.whatsappHeaderBtn:hover {
+  background: linear-gradient(180deg, #2ae06d 0%, #20b85a 100%);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48),
+              0 4px 0 #126e34,
+              0 8px 18px rgba(37, 211, 102, 0.42);
+}
+.whatsappHeaderBtn:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25),
+              0 1px 0 #126e34,
+              0 2px 4px rgba(37, 211, 102, 0.2);
+}
+.whatsappHeaderBtn .waBtnText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: 1.15;
+}
+.whatsappHeaderBtn .waBtnTitle {
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.whatsappHeaderBtn .waBtnSub {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.95;
+  letter-spacing: 0.02em;
 }
 
 .skeuoSuccessBtn {
@@ -153,7 +218,7 @@ html[data-theme='dark'] .skeuoBtnSecondary {
   border: 1px solid #135d35;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
               0 3px 0 #0c4325,
-              0 5px 12px rgba(40, 167, 100, 0.28);
+              0 4px 10px rgba(40, 167, 100, 0.25);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 .skeuoSuccessBtn:hover {
@@ -625,9 +690,9 @@ html[data-theme='dark'] .operatorAvatar{background:var(--teal)}
 
 /* Left Bento: Donut Card */
 .a2bDonutCard{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:space-between}
-.donutHeader{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
-.donutTitle{font-size:20px;letter-spacing:-.02em;margin:4px 0 0}
-.readinessBadge{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:800;padding:6px 12px;border-radius:999px}
+.donutHeader{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px}
+.donutTitle{font-size:20px;letter-spacing:-.02em;margin:4px 0 0;line-height:1.25}
+.readinessBadge{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:800;padding:6px 12px;border-radius:999px;flex-shrink:0}
 .donutBody{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
 .donutChartWrap{position:relative;width:180px;height:180px;display:grid;place-items:center;flex-shrink:0}
 .donutSvg{display:block}
@@ -650,16 +715,18 @@ html[data-theme='dark'] .operatorAvatar{background:var(--teal)}
 .legendCount small{display:block;font-size:11px;color:var(--muted)}
 
 .urgentNoticeBox{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
-.urgentNoticeHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.urgentNoticeTitle{font-size:12px;font-weight:800;color:var(--orange);display:flex;align-items:center;gap:6px}
+.urgentNoticeHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.urgentNoticeTitle{font-size:12.5px;font-weight:800;color:var(--orange);display:flex;align-items:center;gap:6px}
 .urgentNoticeLink{font-size:12px;font-weight:750;color:var(--teal);display:flex;align-items:center;gap:4px}
-.urgentUnitsList{display:flex;flex-wrap:wrap;gap:8px}
-.urgentUnitChip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:9px;text-decoration:none;transition:.15s;font-size:12px;border:1px solid var(--border)}
+.urgentUnitsList{display:flex;flex-direction:column;gap:8px}
+.urgentUnitChip{display:flex;align-items:flex-start;gap:10px;padding:9px 13px;border-radius:11px;text-decoration:none;transition:.18s;font-size:12.5px;border:1px solid var(--border)}
 .urgentUnitChip.chipWarning{background:var(--amber-soft);color:var(--orange);border-color:rgba(245,158,11,.25)}
 .urgentUnitChip.chipBreakdown{background:var(--red-soft);color:var(--red);border-color:rgba(239,68,68,.25)}
 .urgentUnitChip:hover{filter:brightness(.95);transform:translateY(-1px)}
-.chipName{font-weight:750}
-.chipReason{font-size:11px;opacity:.85}
+.chipIcon{flex-shrink:0;margin-top:2px}
+.chipInfo{display:flex;flex-direction:column;gap:3px;text-align:left;min-width:0}
+.chipName{font-size:12.5px;font-weight:750;color:currentColor;line-height:1.25}
+.chipReason{font-size:11.5px;opacity:.9;line-height:1.25}
 
 /* Right Bento: Airport Weather & Dual Clock */
 .airportWeatherCard{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:space-between}
@@ -672,10 +739,10 @@ html[data-theme='dark'] .operatorAvatar{background:var(--teal)}
 
 .dualClockRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .clockBlock{background:var(--card-2);border:1px solid var(--border);border-radius:12px;padding:10px 14px}
-.clockTag{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.06em;display:block}
+.clockTag{font-size:10px;font-weight:850;color:var(--muted);letter-spacing:.06em;display:block}
 .clockTimeDisplay{display:flex;align-items:center;gap:8px;margin-top:4px}
 .clockTimeDisplay strong{font-size:18px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--text)}
-.wibBlock .clockTimeDisplay svg{color:var(--teal)}
+.witBlock .clockTimeDisplay svg{color:var(--teal)}
 .zuluBlock .clockTimeDisplay svg{color:var(--amber)}
 
 .weatherCardDivider{border:0;border-top:1px solid var(--border);margin:8px 0 12px}
@@ -814,11 +881,18 @@ html[data-theme='dark'] .viewToggleBtn.active{background:var(--navy-2);color:#ff
   .weatherMain{flex-direction:column;align-items:flex-start;gap:10px}
   .weatherMetricsGrid{grid-template-columns:1fr;gap:6px}
   .greetingMain{display:flex;flex-direction:row;align-items:flex-start;gap:12px}
-  .greetingTitle{font-size:20px}
-  .greetingCustomActions{display:flex;flex-wrap:wrap;gap:8px;width:100%}
-  .greetingCustomActions .primaryButton,
-  .greetingCustomActions .secondaryButton,
-  .greetingCustomActions .skeuoDangerBtn{flex:1;min-width:120px;padding:9px 12px;font-size:12px;text-align:center}
+  .greetingCard{padding:18px 16px;gap:14px}
+  .greetingTitle{font-size:20px;margin:4px 0 6px;line-height:1.25}
+  .greetingSub{font-size:13px;line-height:1.5;margin-bottom:6px}
+  .greetingDateTime{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 12px}
+  .greetingCustomActions{width:100%}
+  .headerActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+  .headerActions .primaryButton,
+  .headerActions .skeuoDangerBtn{padding:10px 12px;font-size:12.5px;min-height:42px;text-align:center}
+  .headerActions .whatsappHeaderBtn{grid-column:span 2;width:100%;padding:10px 16px;min-height:44px}
+  .vehiclesPage .pageHeader{flex-direction:column;gap:14px;align-items:stretch}
+  .vehiclesPage .headerActions{width:100%}
+  .vehiclesPage .headerActions .primaryButton{width:100%;padding:12px 18px;font-size:14px}
   .technicianCardList{grid-template-columns:1fr}
   .techCardHeader{padding:14px 14px 8px}
   .techCardBody{padding:8px 14px 12px}
@@ -830,32 +904,60 @@ html[data-theme='dark'] .viewToggleBtn.active{background:var(--navy-2);color:#ff
   .historyTableWrapper{margin:0 -14px;border-radius:0}
 }
 
-/* ===== Print Stylesheet for Official PDF Report ===== */
+/* ===== Print Stylesheet for Simple Clean Table Report ===== */
 @media print{
-  @page{size:A4 landscape;margin:12mm}
-  body{background:#fff!important;color:#111!important;font-size:11pt}
-  .sidebar,.mobileNav,.topBar,.noPrint,.headerActions,.timeRangeSelectorSection,.historyToolbar,.dashboardHero,.resetBtn{display:none!important}
-  .mainContent{margin-left:0!important;padding:0!important}
-  .page{max-width:100%!important;padding:0!important}
+  @page{
+    size:A4 landscape;
+    margin:8mm 10mm;
+  }
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;text-shadow:none!important;box-shadow:none!important}
+  html,body{background:#fff!important;color:#000!important;font-size:9pt!important;font-family:Arial,Helvetica,sans-serif!important}
+  .sidebar,.mobileNav,.topBar,.noPrint,.headerActions,.timeRangeSelectorSection,.historyToolbar,.dashboardHero,.resetBtn,.emptyHistory,.viewToggleGroup,.pagination,.historyStatsGrid,.statsGrid{display:none!important}
+  .mainContent,.page,.historyPage{margin:0!important;padding:0!important;max-width:100%!important;width:100%!important;background:#fff!important}
   .printOnly{display:block!important}
-  .printHeader{margin-bottom:16px}
-  .printHeaderTop{display:flex;justify-content:space-between;align-items:flex-start}
-  .printHeaderTop h2{margin:0 0 4px;font-size:16pt;letter-spacing:-.01em;color:#0b2942}
-  .printHeaderTop p{margin:0;font-size:9.5pt;color:#555}
-  .printMeta{text-align:right;font-size:8.5pt;color:#333;line-height:1.4}
-  .printMeta p{margin:0}
-  .printDivider{border:0;border-top:2px solid #0b2942;margin:10px 0}
-  .printSummary{background:#f0f4f7;padding:8px 12px;border-radius:6px;font-size:9pt;margin-bottom:12px}
-  .historyTablePanel{box-shadow:none!important;border:1px solid #ccc!important}
-  .historyTable thead th{background:#e5edf1!important;color:#111!important;border-bottom:1.5px solid #888!important;font-size:8.5pt}
-  .historyTable tbody td{border-bottom:1px solid #ddd!important;padding:7px 10px!important;font-size:9pt}
-  .historyBadge{border:1px solid #bbb;background:transparent!important;color:#000!important}
-  .operatorAvatar{display:none}
-  .printFooter{margin-top:24px;page-break-inside:avoid}
-  .signatureGrid{display:flex;justify-content:space-around;margin-top:20px}
-  .signatureBox{text-align:center;width:240px;font-size:9.5pt}
-  .signatureSpace{height:60px}
-  .signatureBox strong{display:block;border-top:1px solid #333;padding-top:4px}
-  .signatureBox span{font-size:8.5pt;color:#666}
-  .printDisclaimer{text-align:center;font-size:8pt;color:#888;margin-top:20px}
+
+  /* Official Government Airport Header */
+  .printHeader{margin-bottom:10px;text-align:center}
+  .printHeaderGov h3{margin:0;font-size:11pt;font-weight:800;letter-spacing:.05em;color:#000!important}
+  .printHeaderGov h4{margin:2px 0 0;font-size:9.5pt;font-weight:700;color:#000!important}
+  .printHeaderGov h5{margin:2px 0 0;font-size:9pt;font-weight:700;color:#000!important}
+  .printSubDept{margin:2px 0 0;font-size:8pt;font-weight:600;color:#333!important}
+  .printDivider{border:0;border-top:2px solid #000!important;margin:6px 0 8px}
+  .printDocTitleBlock h2{margin:0 0 4px;font-size:10.5pt;font-weight:800;text-transform:uppercase;color:#000!important}
+  .printDocMetaGrid{display:flex;justify-content:center;gap:18px;font-size:8pt;color:#222!important}
+
+  /* Simple Official Table */
+  .historyTablePanel,.historyTableWrapper{
+    box-shadow:none!important;border:none!important;background:#fff!important;padding:0!important;margin:0!important;width:100%!important;overflow:visible!important
+  }
+  .historyTable{
+    width:100%!important;border-collapse:collapse!important;background:#fff!important;color:#000!important;font-size:8pt!important;line-height:1.3!important
+  }
+  .historyTable thead th{
+    background:#f1f5f9!important;color:#000!important;border:1px solid #333!important;padding:5px 7px!important;font-size:7.5pt!important;font-weight:800!important;text-align:left!important;text-transform:uppercase
+  }
+  .historyTable tbody tr{
+    background:#fff!important;page-break-inside:avoid!important;break-inside:avoid!important
+  }
+  .historyTable tbody td{
+    background:#fff!important;color:#000!important;border:1px solid #444!important;padding:5px 7px!important;font-size:8pt!important;vertical-align:middle!important
+  }
+  .historyTable tbody td strong,
+  .historyTable tbody td span,
+  .historyTable tbody td small,
+  .historyTable tbody td time{color:#000!important}
+  .historyBadge{
+    border:1px solid #555!important;background:transparent!important;color:#000!important;padding:1px 5px!important;font-size:7.5pt!important;font-weight:700!important;display:inline-block!important;border-radius:3px!important
+  }
+  .operatorCol{display:block!important}
+  .operatorAvatar{display:none!important}
+
+  /* Simple Signature Footer */
+  .printFooter{margin-top:16px;page-break-inside:avoid!important;break-inside:avoid!important}
+  .signatureGrid{display:flex;justify-content:space-around;margin-top:12px}
+  .signatureBox{text-align:center;width:220px;font-size:8.5pt;color:#000!important}
+  .signatureSpace{height:46px}
+  .signatureBox strong{display:block;border-top:1px solid #000;padding-top:3px;color:#000!important}
+  .signatureBox span{font-size:7.5pt;color:#333!important}
+  .printDisclaimer{text-align:center;font-size:7.5pt;color:#555!important;margin-top:10px}
 }

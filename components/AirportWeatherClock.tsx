@@ -25,9 +25,10 @@ export default function AirportWeatherClock() {
     return () => clearInterval(interval);
   }, []);
 
-  // Format local WIB
-  const wibTime = mounted && time
+  // Format local WIT (Maluku timezone UTC+9)
+  const witTime = mounted && time
     ? time.toLocaleTimeString('id-ID', {
+        timeZone: 'Asia/Jayapura',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
@@ -46,9 +47,9 @@ export default function AirportWeatherClock() {
       <div className="airportClockHeader">
         <div className="stationMeta">
           <span className="stationCode">
-            <Radio size={13} className="radarPulse" /> WAMP / GNS
+            <Radio size={13} className="radarPulse" /> WAPG / NRE
           </span>
-          <span className="stationName">Bandar Udara Binaka</span>
+          <span className="stationName">Bandar Udara Namniwel</span>
         </div>
         <div className="flightConditionBadge">
           <Plane size={13} />
@@ -57,11 +58,11 @@ export default function AirportWeatherClock() {
       </div>
 
       <div className="dualClockRow">
-        <div className="clockBlock wibBlock">
-          <span className="clockTag">WAKTU LOKAL (WIB)</span>
+        <div className="clockBlock witBlock">
+          <span className="clockTag">WAKTU LOKAL (WIT)</span>
           <div className="clockTimeDisplay">
             <Clock size={16} />
-            <strong>{wibTime}</strong>
+            <strong>{witTime}</strong>
           </div>
         </div>
         <div className="clockBlock zuluBlock">

@@ -254,11 +254,6 @@ function VehiclesContent() {
         </div>
       </section>
 
-      {/* Mobile Add Button */}
-      <button className="mobileAddBtn mobileOnly" onClick={() => setShowForm(true)}>
-        <Plus size={18} /> Tambah Unit A2B
-      </button>
-
       {/* Result Count Banner */}
       <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '13px', color: 'var(--muted)' }}>
         <span>
