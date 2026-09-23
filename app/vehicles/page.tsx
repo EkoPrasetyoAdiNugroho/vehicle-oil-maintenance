@@ -23,7 +23,15 @@ import {
 } from 'lucide-react';
 import StatusBadge from '@/components/StatusBadge';
 import VehicleForm from '@/components/VehicleForm';
-import { maintenanceRecords, odometerHistory, rules, vehicles as seedVehicles } from '@/lib/demo-data';
+import {
+  getStoredVehicles,
+  saveVehicle,
+  deleteVehicle,
+  getStoredCategories,
+  getStoredRules,
+  getStoredMaintenance,
+  getStoredOdometer,
+} from '@/lib/storage';
 import { projectMaintenance, getWaAlertUrl } from '@/lib/maintenance';
 import { Vehicle } from '@/lib/types';
 
@@ -35,11 +43,23 @@ function VehiclesContent() {
   const [filter, setFilter] = useState('ALL');
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [viewMode, setViewMode] = useState<'table' | 'card'>('table');
-  const [vehicleList, setVehicleList] = useState<Vehicle[]>(seedVehicles);
+  const [vehicleList, setVehicleList] = useState<Vehicle[]>([]);
+  const [categoryList, setCategoryList] = useState<string[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const asOf = '2026-09-19T14:00:00+08:00';
+
+  // Load from storage and listen to storage updates
+  useEffect(() => {
+    const refreshData = () => {
+      setVehicleList(getStoredVehicles());
+      setCategoryList(getStoredCategories());
+    };
+    refreshData();
+    window.addEventListener('a2b_storage_update', refreshData);
+    return () => window.removeEventListener('a2b_storage_update', refreshData);
+  }, []);
 
   // Apply category param from URL if present
   useEffect(() => {
@@ -56,85 +76,85 @@ function VehiclesContent() {
   }, []);
 
   const categories = useMemo(() => {
-    const set = new Set<string>();
+    const set = new Set<string>(categoryList);
     vehicleList.forEach(v => {
       if (v.category) set.add(v.category);
     });
     return Array.from(set);
-  }, [vehicleList]);
+  }, [categoryList, vehicleList]);
 
-  const data = useMemo(
-    () =>
-      vehicleList
-        .map(v => {
-          const rule = rules.find(r => r.vehicleId === v.id) || {
-            id: `def-${v.id}`,
-            vehicleId: v.id,
-            type: 'GANTI OLI',
-            intervalKm: 5000,
-            intervalDays: 180,
-            warningKm: 500,
-            warningDays: 14,
-            active: true,
-          };
-          const last = maintenanceRecords
-            .filter(m => m.vehicleId === v.id && m.type === 'GANTI_OLI')
-            .sort((a, b) => +new Date(b.date) - +new Date(a.date))[0] || {
-            id: `def-m-${v.id}`,
-            vehicleId: v.id,
-            ruleId: rule.id,
-            type: 'GANTI_OLI' as const,
-            km: v.currentKm - 4000,
-            date: '2026-06-01T08:00:00+08:00',
-            operator: 'Sistem',
-          };
-          const hist = odometerHistory.filter(o => o.vehicleId === v.id);
-          return {
-            v,
-            p: projectMaintenance({
-              currentKm: v.currentKm,
-              asOf,
-              rule,
-              lastMaintenance: last,
-              odometerHistory: hist,
-            }),
-          };
-        })
-        .filter(x => {
-          const searchTargets = [
-            x.v.name,
-            x.v.plate,
-            x.v.brand,
-            x.v.model,
-            x.v.hullNumber || '',
-            x.v.category || '',
-          ]
-            .join(' ')
-            .toLowerCase();
+  const data = useMemo(() => {
+    const rules = getStoredRules();
+    const maintenanceRecords = getStoredMaintenance();
+    const odometerHistory = getStoredOdometer();
 
-          const hitSearch = searchTargets.includes(q.toLowerCase());
-          const hitStatus = filter === 'ALL' || x.p.status === filter;
-          const hitCategory =
-            categoryFilter === 'ALL' ||
-            (x.v.category && x.v.category.toLowerCase() === categoryFilter.toLowerCase());
+    return vehicleList
+      .map(v => {
+        const rule = rules.find(r => r.vehicleId === v.id) || {
+          id: `def-${v.id}`,
+          vehicleId: v.id,
+          type: 'GANTI OLI',
+          intervalKm: 5000,
+          intervalDays: 180,
+          warningKm: 500,
+          warningDays: 14,
+          active: true,
+        };
+        const last = maintenanceRecords
+          .filter(m => m.vehicleId === v.id && m.type === 'GANTI_OLI')
+          .sort((a, b) => +new Date(b.date) - +new Date(a.date))[0] || {
+          id: `def-m-${v.id}`,
+          vehicleId: v.id,
+          ruleId: rule.id,
+          type: 'GANTI_OLI' as const,
+          km: Math.max(0, v.currentKm - 4000),
+          date: '2026-06-01T08:00:00+08:00',
+          operator: 'Sistem',
+        };
+        const hist = odometerHistory.filter(o => o.vehicleId === v.id);
+        return {
+          v,
+          p: projectMaintenance({
+            currentKm: v.currentKm,
+            asOf,
+            rule,
+            lastMaintenance: last,
+            odometerHistory: hist,
+          }),
+        };
+      })
+      .filter(x => {
+        const searchTargets = [
+          x.v.name,
+          x.v.plate,
+          x.v.brand,
+          x.v.model,
+          x.v.hullNumber || '',
+          x.v.category || '',
+        ]
+          .join(' ')
+          .toLowerCase();
 
-          return hitSearch && hitStatus && hitCategory;
-        }),
-    [q, filter, categoryFilter, vehicleList]
-  );
+        const hitSearch = searchTargets.includes(q.toLowerCase());
+        const hitStatus = filter === 'ALL' || x.p.status === filter;
+        const hitCategory =
+          categoryFilter === 'ALL' ||
+          (x.v.category && x.v.category.toLowerCase() === categoryFilter.toLowerCase());
+
+        return hitSearch && hitStatus && hitCategory;
+      });
+  }, [q, filter, categoryFilter, vehicleList]);
 
   function handleSaveVehicle(vehicle: Vehicle) {
-    if (editingVehicle) {
-      setVehicleList(prev => prev.map(v => (v.id === vehicle.id ? vehicle : v)));
-    } else {
-      setVehicleList(prev => [...prev, vehicle]);
-    }
+    const updated = saveVehicle(vehicle);
+    setVehicleList(updated);
     setShowForm(false);
     setEditingVehicle(null);
   }
 
   function handleDeleteVehicle(id: string) {
-    setVehicleList(prev => prev.filter(v => v.id !== id));
+    const updated = deleteVehicle(id);
+    setVehicleList(updated);
     setDeleteConfirm(null);
   }
 

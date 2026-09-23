@@ -20,23 +20,50 @@ import GreetingHeader from '@/components/GreetingHeader';
 import A2BReadinessDonut from '@/components/A2BReadinessDonut';
 import AirportWeatherClock from '@/components/AirportWeatherClock';
 import A2BCategoryCards from '@/components/A2BCategoryCards';
-import { maintenanceRecords, odometerHistory, rules, vehicles } from '@/lib/demo-data';
+import {
+  getStoredVehicles,
+  getStoredRules,
+  getStoredMaintenance,
+  getStoredOdometer,
+  saveMaintenanceRecord,
+} from '@/lib/storage';
 import { projectMaintenance, getWaAlertUrl } from '@/lib/maintenance';
-import { MaintenanceProjection } from '@/lib/types';
+import { MaintenanceProjection, Vehicle } from '@/lib/types';
+import { useEffect } from 'react';
 
 export default function DashboardPage() {
   const asOf = '2026-09-19T14:00:00+08:00';
 
+  const [vehicleList, setVehicleList] = useState<Vehicle[]>([]);
+
   // Modal Laporkan Kerusakan state
   const [damageModalOpen, setDamageModalOpen] = useState(false);
-  const [selectedDamageVehicle, setSelectedDamageVehicle] = useState(vehicles[0]?.id || '');
+  const [selectedDamageVehicle, setSelectedDamageVehicle] = useState('');
   const [damageSeverity, setDamageSeverity] = useState('BREAKDOWN');
   const [damageDescription, setDamageDescription] = useState('');
   const [damageSuccessMsg, setDamageSuccessMsg] = useState(false);
 
+  // Load vehicles from storage
+  useEffect(() => {
+    const refreshData = () => {
+      const v = getStoredVehicles();
+      setVehicleList(v);
+      if (v.length > 0 && !selectedDamageVehicle) {
+        setSelectedDamageVehicle(v[0].id);
+      }
+    };
+    refreshData();
+    window.addEventListener('a2b_storage_update', refreshData);
+    return () => window.removeEventListener('a2b_storage_update', refreshData);
+  }, [selectedDamageVehicle]);
+
   // Projections
   const rows = useMemo(() => {
-    return vehicles.map(v => {
+    const rules = getStoredRules();
+    const maintenanceRecords = getStoredMaintenance();
+    const odometerHistory = getStoredOdometer();
+
+    return vehicleList.map(v => {
       const rule = rules.find(r => r.vehicleId === v.id) || {
         id: `def-${v.id}`,
         vehicleId: v.id,
@@ -54,7 +81,7 @@ export default function DashboardPage() {
         vehicleId: v.id,
         ruleId: rule.id,
         type: 'GANTI_OLI' as const,
-        km: v.currentKm - 4000,
+        km: Math.max(0, v.currentKm - 4000),
         date: '2026-06-01T08:00:00+08:00',
         operator: 'Sistem',
       };
@@ -70,7 +97,7 @@ export default function DashboardPage() {
         }),
       };
     });
-  }, [asOf]);
+  }, [vehicleList, asOf]);
 
   const projectionsMap = useMemo(() => {
     const map = new Map<string, MaintenanceProjection>();
@@ -110,6 +137,21 @@ export default function DashboardPage() {
 
   const handleDamageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (selectedDamageVehicle) {
+      const v = vehicleList.find(item => item.id === selectedDamageVehicle);
+      if (v) {
+        saveMaintenanceRecord({
+          id: `damage-${Date.now()}`,
+          vehicleId: v.id,
+          ruleId: `def-${v.id}`,
+          type: 'GANTI_OLI',
+          km: v.currentKm,
+          date: new Date().toISOString(),
+          operator: 'Operator Lapangan',
+          notes: `Laporan Kerusakan [${damageSeverity}]: ${damageDescription}`,
+        });
+      }
+    }
     setDamageSuccessMsg(true);
     setTimeout(() => {
       setDamageSuccessMsg(false);
@@ -183,7 +225,7 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <A2BCategoryCards vehicles={vehicles} projections={projectionsMap} />
+          <A2BCategoryCards vehicles={vehicleList} projections={projectionsMap} />
         </div>
       </section>
 
@@ -313,7 +355,7 @@ export default function DashboardPage() {
                       onChange={e => setSelectedDamageVehicle(e.target.value)}
                       required
                     >
-                      {vehicles.map(v => (
+                      {vehicleList.map(v => (
                         <option key={v.id} value={v.id}>
                           {v.hullNumber ? `[${v.hullNumber}] ` : ''}{v.name} ({v.plate})
                         </option>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Truck,
@@ -11,83 +12,113 @@ import {
   ArrowUpRight,
   ShieldCheck,
   AlertTriangle,
+  Layers,
 } from 'lucide-react';
 import { Vehicle, MaintenanceProjection } from '@/lib/types';
+import { getStoredCategories } from '@/lib/storage';
 
 interface CategoryCardsProps {
   vehicles: Vehicle[];
   projections: Map<string, MaintenanceProjection>;
 }
 
+const CATEGORY_META: Record<
+  string,
+  { desc: string; icon: any; color: string; bgLight: string }
+> = {
+  'Pushback Tug': {
+    desc: 'Penarik & pendorong pesawat di apron',
+    icon: Truck,
+    color: '#0284c7',
+    bgLight: '#e0f2fe',
+  },
+  'Fire Truck PKP-PK': {
+    desc: 'Kendaraan pemadam & darurat ARFF',
+    icon: Flame,
+    color: '#dc2626',
+    bgLight: '#fee2e2',
+  },
+  'Baggage Towing': {
+    desc: 'Traktor pengangkut bagasi & kargo',
+    icon: Luggage,
+    color: '#d97706',
+    bgLight: '#fef3c7',
+  },
+  'Airside Ops': {
+    desc: 'Patroli runway & follow-me car',
+    icon: Compass,
+    color: '#059669',
+    bgLight: '#d1fae5',
+  },
+  'GPU / Genset': {
+    desc: 'Ground power unit suplai listrik',
+    icon: Zap,
+    color: '#7c3aed',
+    bgLight: '#ede9fe',
+  },
+  'Garbarata / Ambulift': {
+    desc: 'Tangga penumpang & boarding medis',
+    icon: Accessibility,
+    color: '#0891b2',
+    bgLight: '#cffafe',
+  },
+};
+
 export default function A2BCategoryCards({ vehicles, projections }: CategoryCardsProps) {
-  // Aggregate by category
-  const categoriesDef = [
-    {
-      name: 'Pushback Tug',
-      desc: 'Penarik & pendorong pesawat di apron',
-      icon: Truck,
-      color: '#0284c7',
-      bgLight: '#e0f2fe',
-    },
-    {
-      name: 'Fire Truck PKP-PK',
-      desc: 'Kendaraan pemadam & darurat ARFF',
-      icon: Flame,
-      color: '#dc2626',
-      bgLight: '#fee2e2',
-    },
-    {
-      name: 'Baggage Towing',
-      desc: 'Traktor pengangkut bagasi & kargo',
-      icon: Luggage,
-      color: '#d97706',
-      bgLight: '#fef3c7',
-    },
-    {
-      name: 'Airside Ops',
-      desc: 'Patroli runway & follow-me car',
-      icon: Compass,
-      color: '#059669',
-      bgLight: '#d1fae5',
-    },
-    {
-      name: 'GPU / Genset',
-      desc: 'Ground power unit suplai listrik',
-      icon: Zap,
-      color: '#7c3aed',
-      bgLight: '#ede9fe',
-    },
-    {
-      name: 'Garbarata / Ambulift',
-      desc: 'Tangga penumpang & boarding medis',
-      icon: Accessibility,
-      color: '#0891b2',
-      bgLight: '#cffafe',
-    },
-  ];
+  const [categoriesList, setCategoriesList] = useState<string[]>([]);
 
-  const categoryStats = categoriesDef.map(cat => {
-    const matchingVehicles = vehicles.filter(
-      v => v.category?.toLowerCase() === cat.name.toLowerCase()
-    );
-    const total = matchingVehicles.length;
-    const ready = matchingVehicles.filter(v => {
-      const p = projections.get(v.id);
-      return p ? p.status === 'NORMAL' : true;
-    }).length;
-    const hasIssue = matchingVehicles.some(v => {
-      const p = projections.get(v.id);
-      return p ? p.status === 'WARNING' || p.status === 'OVERDUE' : false;
-    });
-
-    return {
-      ...cat,
-      total,
-      ready,
-      hasIssue,
-      matchingVehicles,
+  useEffect(() => {
+    const updateCategories = () => {
+      setCategoriesList(getStoredCategories());
     };
-  });
+    updateCategories();
+    window.addEventListener('a2b_storage_update', updateCategories);
+    return () => window.removeEventListener('a2b_storage_update', updateCategories);
+  }, []);
+
+  // Merge stored categories with any category present in active vehicles
+  const allCategories = useMemo(() => {
+    const set = new Set<string>(categoriesList);
+    vehicles.forEach(v => {
+      if (v.category) set.add(v.category);
+    });
+    return Array.from(set);
+  }, [categoriesList, vehicles]);
+
+  const categoryStats = useMemo(() => {
+    return allCategories.map(catName => {
+      const meta = CATEGORY_META[catName] || {
+        desc: 'Armada pendukung operasional bandara',
+        icon: Layers,
+        color: '#0d9488',
+        bgLight: '#ccfbf1',
+      };
+
+      const matchingVehicles = vehicles.filter(
+        v => v.category?.toLowerCase() === catName.toLowerCase()
+      );
+      const total = matchingVehicles.length;
+      const ready = matchingVehicles.filter(v => {
+        const p = projections.get(v.id);
+        return p ? p.status === 'NORMAL' : true;
+      }).length;
+      const hasIssue = matchingVehicles.some(v => {
+        const p = projections.get(v.id);
+        return p ? p.status === 'WARNING' || p.status === 'OVERDUE' : false;
+      });
+
+      return {
+        name: catName,
+        desc: meta.desc,
+        icon: meta.icon,
+        color: meta.color,
+        bgLight: meta.bgLight,
+        total,
+        ready,
+        hasIssue,
+      };
+    });
+  }, [allCategories, vehicles, projections]);
 
   return (
     <div className="bentoCategoryGrid">

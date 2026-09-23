@@ -565,56 +565,98 @@ html[data-theme='dark'] .deleteBtn{background:rgba(21,33,42,.85);color:var(--red
 @media(max-width:760px){
   :root{--sidebar:0px}
   .sidebar{display:none}
-  .mobileNav{position:fixed;display:flex;left:12px;right:12px;bottom:12px;height:62px;background:#0b2942;border-radius:16px;z-index:70;padding:7px;box-shadow:0 12px 34px rgba(0,0,0,.25);justify-content:space-around}
-  .mobileNavItem{flex:1;display:grid;place-items:center;color:#9eb8c9;font-size:9px;font-weight:700;gap:2px;border-radius:11px}
-  .mobileNavItem.active{background:#164765;color:#fff}
+  .mobileNav{
+    position:fixed;
+    display:flex;
+    left:14px;
+    right:14px;
+    bottom:12px;
+    height:54px;
+    background:rgba(11,41,66,0.94);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px;
+    z-index:70;
+    padding:4px 8px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.32);
+    justify-content:space-around;
+    align-items:center;
+  }
+  .mobileNavItem{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#9eb8c9;
+    font-size:9.5px;
+    font-weight:700;
+    gap:2px;
+    padding:4px 0;
+    border-radius:12px;
+    transition:all 0.15s ease;
+  }
+  .mobileNavItem.active{
+    background:rgba(22,71,101,0.9);
+    color:#ffffff;
+  }
   .mainContent{margin-left:0}
-  .topBar{height:58px;padding:0 16px}
+  .topBar{height:52px;padding:0 14px}
   .userChip span,.connection span{display:none}
   .topBarDateBadge{display:none}
-  .greetingTitle{font-size:22px}
-  .greetingIconBox{width:44px;height:44px}
-  .greetingSub{font-size:13px}
-  .datePill,.timePill{padding:6px 10px;font-size:12px}
-  .page{padding:16px 14px 96px;max-width:100vw}
-  .pageHeader{flex-direction:column;align-items:stretch;margin-bottom:16px;gap:12px}
-  .pageHeader h1,.detailHero h1{font-size:22px}
-  .pageHeader p{font-size:12.5px;line-height:1.45}
+  .page{padding:12px 12px 84px;max-width:100vw}
+  .pageHeader{flex-direction:column;align-items:stretch;margin-bottom:12px;gap:8px}
+  .pageHeader h1{font-size:19px;letter-spacing:-.015em}
+  .pageHeader p,.vehiclesPage .pageHeader p,.historyPage .pageHeader p{display:none}
   .headerActions{display:flex;flex-wrap:wrap;gap:8px;width:100%}
   .headerActions .primaryButton,
   .headerActions .secondaryButton,
-  .headerActions .skeuoDangerBtn{flex:1;min-width:110px;padding:9px 12px;font-size:12.5px;text-align:center}
-  .toolbar{flex-direction:column;align-items:stretch;gap:10px}
+  .headerActions .skeuoDangerBtn{flex:1;min-width:100px;padding:8px 10px;font-size:12px;text-align:center;justify-content:center}
+  .toolbar{flex-direction:column;align-items:stretch;gap:8px}
   .toolbar select{width:100%!important}
   .searchWrap{width:100%!important}
-  .viewToggleGroup{width:100%;margin-left:0!important}
-  .viewToggleBtn{flex:1;justify-content:center}
+  .viewToggleGroup{display:none!important}
   .vehicleMetrics{grid-template-columns:1fr 1fr}
-  .detailHero{align-items:flex-start;flex-wrap:wrap}
-  .detailPhoto{width:100%;height:100px}
-  .prediction,.ruleGrid{grid-template-columns:1fr}
-  .predictionNote{grid-column:auto}
-  .panel{padding:16px}
-  .panelHead h2{font-size:15px}
+  .detailHero{display:flex;flex-direction:row;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;margin-bottom:10px}
+  .detailPhoto{width:50px;height:50px;border-radius:10px;flex-shrink:0;font-size:11px}
+  .detailHero h1{font-size:17px;margin:2px 0}
+  .detailHero p{font-size:11.5px;margin:0}
+  .detailStats{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .detailStats>div{padding:10px;border-radius:11px;gap:2px}
+  .detailStats svg{width:16px;height:16px}
+  .detailStats span{font-size:10px}
+  .detailStats strong{font-size:15px}
+  .prediction,.ruleGrid{grid-template-columns:1fr 1fr;gap:8px}
+  .prediction>div:not(.predictionNote){padding:8px 10px;border-radius:9px}
+  .prediction strong{font-size:14px;margin-top:2px}
+  .prediction span{font-size:10.5px}
+  .prediction small{font-size:9.5px}
+  .predictionNote{grid-column:1/-1;padding:8px 10px;font-size:11.5px;border-radius:8px}
+  .panel{padding:14px 12px;border-radius:14px;margin-bottom:12px}
+  .panelHead{margin-bottom:10px}
+  .panelHead h2{font-size:14.5px}
   .mobileOnly{display:block}
   .mobileAddBtn{display:flex}
-  .dayPill{padding:6px 10px;font-size:11px}
+  .dayPill{padding:5px 9px;font-size:10.5px}
   .rulesCardsGrid{grid-template-columns:1fr}
   .ruleFormRow,.vehicleFormRow{grid-template-columns:1fr}
-  .modeOption{padding:11px}
+  .modeOption{padding:10px}
   .vehicleCardActions{opacity:1}
   .vehicleFormModal{max-height:95vh;border-radius:14px}
   .vehicleFormPhoto{width:120px;height:85px}
 }
 @media(max-width:470px){
-  .heroMini,.statsGrid,.detailStats{grid-template-columns:1fr}
-  .vehicleMetrics{grid-template-columns:1fr}
-  .userChip>div{width:32px;height:32px}
+  .heroMini{grid-template-columns:1fr}
+  .detailStats{grid-template-columns:1fr 1fr}
+  .historyStatsGrid{grid-template-columns:1fr 1fr}
+  .vehicleMetrics{grid-template-columns:1fr 1fr}
+  .userChip>div{width:30px;height:30px}
   .topActions{gap:6px}
-  .iconButton{width:34px;height:34px}
-  .heroWelcome h2{font-size:19px}
-  .dayPillsRow{gap:5px}
-  .dayPill{padding:5px 8px;font-size:10px}
+  .iconButton{width:32px;height:32px}
+  .heroWelcome h2{font-size:18px}
+  .dayPillsRow{gap:4px}
+  .dayPill{padding:4px 7px;font-size:10px}
   .cardsGrid{grid-template-columns:1fr}
 }
 
@@ -873,35 +915,107 @@ html[data-theme='dark'] .viewToggleBtn.active{background:var(--navy-2);color:#ff
   .a2bDonutCard,.airportWeatherCard,.bentoBottomSection{padding:16px 14px}
 }
 @media(max-width:640px){
-  .bentoCategoryGrid{grid-template-columns:1fr}
-  .donutBody{grid-template-columns:1fr;justify-items:center;gap:18px}
-  .donutChartWrap{margin:0 auto}
-  .donutLegend{width:100%}
-  .dualClockRow{grid-template-columns:1fr;gap:8px}
-  .weatherMain{flex-direction:column;align-items:flex-start;gap:10px}
-  .weatherMetricsGrid{grid-template-columns:1fr;gap:6px}
-  .greetingMain{display:flex;flex-direction:row;align-items:flex-start;gap:12px}
-  .greetingCard{padding:18px 16px;gap:14px}
-  .greetingTitle{font-size:20px;margin:4px 0 6px;line-height:1.25}
-  .greetingSub{font-size:13px;line-height:1.5;margin-bottom:6px}
-  .greetingDateTime{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 12px}
-  .greetingCustomActions{width:100%}
-  .headerActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+  /* Bento Category Grid: 2-column compact tiles */
+  .bentoCategoryGrid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .categoryBentoCard{padding:10px 10px 8px;border-radius:12px}
+  .categoryDesc{display:none!important}
+  .categoryIconWrapper{width:30px;height:30px;border-radius:8px}
+  .categoryIconWrapper svg{width:15px;height:15px}
+  .categoryName{font-size:12px;font-weight:750;margin:0}
+  .categoryCountNumber{font-size:15px}
+  .categoryReadinessPill{font-size:10px;padding:2px 6px}
+  .categoryCardHeader{margin-bottom:6px}
+  .categoryCardFooter{margin-top:6px}
+  .bentoBottomHead{margin-bottom:10px}
+  .bentoBottomHead h2{font-size:16px}
+  .bentoBottomHead p{display:none!important}
+
+  /* Donut Widget: sleek & space-saving */
+  .a2bDonutCard{padding:14px 12px;border-radius:14px}
+  .donutHeader{margin-bottom:10px;gap:8px}
+  .donutTitle{font-size:16px}
+  .donutBody{grid-template-columns:1fr;justify-items:center;gap:12px}
+  .donutChartWrap{width:130px;height:130px;margin:0 auto}
+  .donutChartWrap svg{width:130px;height:130px}
+  .donutPctNumber{font-size:24px}
+  .donutLegend{width:100%;gap:6px}
+  .legendItem{padding:6px 10px;border-radius:9px}
+  .legendItem strong{font-size:12px}
+  .legendItem p{display:none!important}
+  .legendCount strong{font-size:13.5px}
+  .readinessBadge{font-size:10.5px;padding:3px 8px}
+
+  /* Airport Weather Widget: compact 2-column clock */
+  .airportWeatherCard{padding:14px 12px;border-radius:14px}
+  .stationCode{font-size:12px}
+  .flightConditionBadge{font-size:10px;padding:3px 7px}
+  .dualClockRow{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+  .clockBlock{padding:6px 8px;border-radius:9px}
+  .clockTag{font-size:9px}
+  .clockTimeDisplay strong{font-size:14px}
+  .weatherMain{flex-direction:row;align-items:center;gap:8px}
+  .weatherMain>svg{width:26px;height:26px}
+  .weatherTemp{font-size:20px}
+  .weatherMetricsGrid{grid-template-columns:repeat(3,1fr);gap:4px}
+  .weatherMetricItem{padding:4px 6px;border-radius:7px}
+  .weatherMetricItem span{font-size:9px}
+  .weatherMetricItem strong{font-size:11px}
+
+  /* Greeting Header: clean, non-bloated */
+  .greetingCard{padding:12px 14px;gap:8px;border-radius:14px}
+  .greetingMain{display:flex;flex-direction:row;align-items:center;gap:10px}
+  .greetingIconBox{width:34px;height:34px;border-radius:10px}
+  .greetingIconBox svg{width:18px;height:18px}
+  .greetingTitle{font-size:17px;margin:0;line-height:1.2}
+  .greetingSub{display:none!important}
+  .greetingDateTime{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
+  .datePill,.timePill{padding:3px 7px;font-size:10px;border-radius:6px}
+  .headerActions{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}
   .headerActions .primaryButton,
-  .headerActions .skeuoDangerBtn{padding:10px 12px;font-size:12.5px;min-height:42px;text-align:center}
-  .headerActions .whatsappHeaderBtn{grid-column:span 2;width:100%;padding:10px 16px;min-height:44px}
-  .vehiclesPage .pageHeader{flex-direction:column;gap:14px;align-items:stretch}
-  .vehiclesPage .headerActions{width:100%}
-  .vehiclesPage .headerActions .primaryButton{width:100%;padding:12px 18px;font-size:14px}
-  .technicianCardList{grid-template-columns:1fr}
-  .techCardHeader{padding:14px 14px 8px}
-  .techCardBody{padding:8px 14px 12px}
-  .techCardFooter{padding:10px 14px 14px}
-  .techCardName{font-size:16px}
-  .techBigMetricGrid strong{font-size:16px}
-  .timeRangeTabs{width:100%}
-  .timeTab{flex:1;min-width:75px;padding:6px 8px;font-size:11.5px;text-align:center}
-  .historyTableWrapper{margin:0 -14px;border-radius:0}
+  .headerActions .skeuoDangerBtn{padding:8px 10px;font-size:11.5px;min-height:36px;border-radius:8px;text-align:center}
+  .headerActions .whatsappHeaderBtn{grid-column:span 2;width:100%;padding:7px 12px;min-height:36px;border-radius:8px}
+
+  /* Priority & Timeline */
+  .priorityRow{padding:8px 10px;border-radius:10px}
+  .priorityRow strong{font-size:13px}
+  .priorityRow span{font-size:11px}
+  .priorityIcon{width:32px;height:32px;border-radius:8px}
+  .priorityIcon svg{width:15px;height:15px}
+
+  /* Vehicles Page & Technician Card */
+  .vehiclesPage .pageHeader{flex-direction:column;gap:8px;align-items:stretch;margin-bottom:8px}
+  .vehiclesPage .pageHeader p{display:none!important}
+  .vehiclesPage .headerActions .primaryButton{width:100%;padding:10px 14px;font-size:13px;border-radius:9px}
+  .technicianCardList{grid-template-columns:1fr;gap:10px}
+  .technicianCard{border-left-width:4px;border-radius:13px}
+  .techCardHeader{padding:10px 12px 4px}
+  .techCardName{font-size:15px;margin:2px 0}
+  .techCategoryTag{font-size:11px}
+  .techHullPill,.techPlatePill{font-size:10.5px;padding:2px 6px;border-radius:5px}
+  .techCardBody{padding:6px 12px 10px;gap:6px}
+  .techBigMetricGrid{padding:8px 10px;border-radius:9px;gap:6px}
+  .techMetricItem span{font-size:9.5px}
+  .techMetricItem strong{font-size:14.5px}
+  .techTimelineRow{font-size:11px;padding:0}
+  .techCardFooter{padding:8px 12px 10px;gap:6px}
+  .techCardFooter .primaryButton{padding:8px 12px;font-size:12px;border-radius:8px}
+  .techCardFooter .secondaryButton{padding:8px 10px;border-radius:8px}
+  .waAlertBtnFull{padding:7px 12px;font-size:11.5px;border-radius:8px}
+
+  /* History Page */
+  .historyPage .pageHeader p{display:none!important}
+  .historyStatsGrid{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+  .historyStatsGrid .statCard{padding:8px 10px;border-radius:10px;gap:8px}
+  .historyStatsGrid .statCard svg{width:16px;height:16px}
+  .historyStatsGrid .statCard strong{font-size:16px}
+  .historyStatsGrid .statCard span{font-size:10px}
+  .timeRangeSelectorSection{padding:8px 10px;gap:6px;border-radius:10px;margin-bottom:10px}
+  .timeRangeLabel{font-size:11.5px}
+  .timeRangeTabs{width:100%;gap:4px}
+  .timeTab{flex:1;min-width:65px;padding:5px 6px;font-size:10.5px;text-align:center;border-radius:7px}
+  .currentRangeIndicator{display:none!important}
+  .historyToolbar{margin-bottom:10px;gap:8px}
+  .historyTableWrapper{margin:0 -12px;border-radius:0}
 }
 
 /* ===== Print Stylesheet for Simple Clean Table Report ===== */
@@ -909,6 +1023,14 @@ html[data-theme='dark'] .viewToggleBtn.active{background:var(--navy-2);color:#ff
   @page{
     size:A4 landscape;
     margin:8mm 10mm;
+  }
+  :root, html, body, [data-theme='dark'], html[data-theme='dark'] {
+    --bg: #ffffff !important;
+    --card: #ffffff !important;
+    --card-2: #ffffff !important;
+    --border: #cccccc !important;
+    --text: #000000 !important;
+    --muted: #444444 !important;
   }
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;text-shadow:none!important;box-shadow:none!important}
   html,body{background:#fff!important;color:#000!important;font-size:9pt!important;font-family:Arial,Helvetica,sans-serif!important}
@@ -946,8 +1068,32 @@ html[data-theme='dark'] .viewToggleBtn.active{background:var(--navy-2);color:#ff
   .historyTable tbody td span,
   .historyTable tbody td small,
   .historyTable tbody td time{color:#000!important}
-  .historyBadge{
-    border:1px solid #555!important;background:transparent!important;color:#000!important;padding:1px 5px!important;font-size:7.5pt!important;font-weight:700!important;display:inline-block!important;border-radius:3px!important
+
+  /* Fix for Plate Badge and all tags in print: clean white pill with dark border and black bold text */
+  .plateBadge,
+  .historyTable .plateBadge {
+    display: inline-block !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    padding: 2px 7px !important;
+    border-radius: 4px !important;
+    font-size: 8pt !important;
+    font-family: monospace !important;
+    font-weight: 850 !important;
+    letter-spacing: 0.05em !important;
+  }
+  .historyBadge,
+  .historyTable [class*="badge"],
+  .historyTable .actBadge {
+    border: 1px solid #444!important;
+    background: #ffffff!important;
+    color: #000000!important;
+    padding: 2px 6px!important;
+    font-size: 7.5pt!important;
+    font-weight: 700!important;
+    display: inline-block!important;
+    border-radius: 3px!important;
   }
   .operatorCol{display:block!important}
   .operatorAvatar{display:none!important}

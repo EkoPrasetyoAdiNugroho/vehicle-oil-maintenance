@@ -19,34 +19,40 @@ import {
   Info,
 } from 'lucide-react';
 import {
-  maintenanceRecords,
-  odometerHistory,
-  vehicles,
-  weeklyChecklistEntries,
-} from '@/lib/demo-data';
+  getStoredVehicles,
+  getStoredMaintenance,
+  getStoredOdometer,
+  getStoredChecklistEntries,
+} from '@/lib/storage';
 import { buildHistoryActivities, filterActivities } from '@/lib/history';
-import { HistoryActivity, HistoryActivityType, HistoryTimeRange } from '@/lib/types';
+import { HistoryActivity, HistoryActivityType, HistoryTimeRange, Vehicle } from '@/lib/types';
+import { useEffect } from 'react';
 
 export default function HistoryPage() {
   const [timeRange, setTimeRange] = useState<HistoryTimeRange>('WEEK');
   const [vehicleId, setVehicleId] = useState<string>('ALL');
   const [activityType, setActivityType] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [vehiclesList, setVehiclesList] = useState<Vehicle[]>([]);
+  const [allActivities, setAllActivities] = useState<HistoryActivity[]>([]);
 
   // Use current date for reference
   const referenceDate = useMemo(() => new Date(), []);
 
-  // Build all activities once
-  const allActivities = useMemo(
-    () =>
-      buildHistoryActivities(
-        vehicles,
-        maintenanceRecords,
-        odometerHistory,
-        weeklyChecklistEntries
-      ),
-    []
-  );
+  // Build activities from storage
+  useEffect(() => {
+    const refreshData = () => {
+      const v = getStoredVehicles();
+      const m = getStoredMaintenance();
+      const o = getStoredOdometer();
+      const c = getStoredChecklistEntries();
+      setVehiclesList(v);
+      setAllActivities(buildHistoryActivities(v, m, o, c));
+    };
+    refreshData();
+    window.addEventListener('a2b_storage_update', refreshData);
+    return () => window.removeEventListener('a2b_storage_update', refreshData);
+  }, []);
 
   // Filter activities
   const filteredActivities = useMemo(
@@ -294,7 +300,7 @@ export default function HistoryPage() {
           aria-label="Filter Kendaraan"
         >
           <option value="ALL">Semua Kendaraan</option>
-          {vehicles.map(v => (
+          {vehiclesList.map(v => (
             <option key={v.id} value={v.id}>
               {v.name} ({v.plate})
             </option>
@@ -377,7 +383,7 @@ export default function HistoryPage() {
                         <div className="dateTimeCol">
                           <strong className="tableDate">{dateStr}</strong>
                           <span className="tableTime">
-                            <Clock size={11} /> {timeStr} WIB
+                            <Clock size={11} /> {timeStr} WIT
                           </span>
                         </div>
                       </td>
