@@ -294,42 +294,44 @@ export default function HistoryPage() {
           />
         </div>
 
-        <select
-          value={vehicleId}
-          onChange={e => setVehicleId(e.target.value)}
-          aria-label="Filter Kendaraan"
-        >
-          <option value="ALL">Semua Kendaraan</option>
-          {vehiclesList.map(v => (
-            <option key={v.id} value={v.id}>
-              {v.name} ({v.plate})
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={activityType}
-          onChange={e => setActivityType(e.target.value)}
-          aria-label="Filter Jenis Aktivitas"
-        >
-          <option value="ALL">Semua Aktivitas</option>
-          <option value="GANTI_OLI">Ganti Oli Berkala</option>
-          <option value="TAMBAH_OLI">Tambah Oli (Top-Up)</option>
-          <option value="ODOMETER">Update Odometer</option>
-          <option value="CHECKLIST">Inspeksi Mingguan</option>
-        </select>
-
-        {(timeRange !== 'ALL' || vehicleId !== 'ALL' || activityType !== 'ALL' || searchQuery) && (
-          <button
-            type="button"
-            className="secondaryButton resetBtn"
-            onClick={handleResetFilters}
-            title="Reset semua filter"
+        <div className="toolbarSelectRow">
+          <select
+            value={vehicleId}
+            onChange={e => setVehicleId(e.target.value)}
+            aria-label="Filter Kendaraan"
           >
-            <RotateCcw size={14} />
-            <span>Reset</span>
-          </button>
-        )}
+            <option value="ALL">Semua Kendaraan</option>
+            {vehiclesList.map(v => (
+              <option key={v.id} value={v.id}>
+                {v.name} ({v.plate})
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={activityType}
+            onChange={e => setActivityType(e.target.value)}
+            aria-label="Filter Jenis Aktivitas"
+          >
+            <option value="ALL">Semua Aktivitas</option>
+            <option value="GANTI_OLI">Ganti Oli Berkala</option>
+            <option value="TAMBAH_OLI">Tambah Oli (Top-Up)</option>
+            <option value="ODOMETER">Update Odometer</option>
+            <option value="CHECKLIST">Inspeksi Mingguan</option>
+          </select>
+
+          {(timeRange !== 'ALL' || vehicleId !== 'ALL' || activityType !== 'ALL' || searchQuery) && (
+            <button
+              type="button"
+              className="secondaryButton resetBtnCompact"
+              onClick={handleResetFilters}
+              title="Reset semua filter"
+            >
+              <RotateCcw size={14} />
+              <span className="hideOnMobile">Reset</span>
+            </button>
+          )}
+        </div>
       </section>
 
       {/* Main Table Panel */}

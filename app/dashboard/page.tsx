@@ -263,7 +263,7 @@ export default function DashboardPage() {
                         {v.plate} • {v.currentKm.toLocaleString('id-ID')} KM • {v.category || 'A2B'}
                       </span>
                     </div>
-                    <div className="alignRight">
+                    <div className="priorityStatusCol">
                       <StatusBadge status={p.status} />
                       <small>
                         {p.remainingKm < 0

@@ -200,9 +200,9 @@ function VehiclesContent() {
       </header>
 
       {/* Toolbar with Filters & View Mode Toggle */}
-      <section className="toolbar" style={{ flexWrap: 'wrap', gap: '12px' }}>
+      <section className="toolbar vehiclesToolbar" style={{ flexWrap: 'wrap', gap: '10px' }}>
         {/* Search */}
-        <div className="searchWrap" style={{ minWidth: '240px' }}>
+        <div className="searchWrap" style={{ minWidth: '220px' }}>
           <Search size={17} />
           <input
             value={q}
@@ -211,45 +211,46 @@ function VehiclesContent() {
           />
         </div>
 
-        {/* Category Filter */}
-        <select
-          value={categoryFilter}
-          onChange={e => setCategoryFilter(e.target.value)}
-          aria-label="Filter Kategori"
-          style={{ width: '180px' }}
-        >
-          <option value="ALL">Semua Kategori A2B</option>
-          {categories.map(c => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-
-        {/* Status Filter */}
-        <select
-          value={filter}
-          onChange={e => setFilter(e.target.value)}
-          aria-label="Filter Status"
-          style={{ width: '160px' }}
-        >
-          <option value="ALL">Semua Status</option>
-          <option value="NORMAL">🟢 Ready / Aman</option>
-          <option value="WARNING">🟡 Jadwal Servis</option>
-          <option value="OVERDUE">🔴 Breakdown / Rusak</option>
-        </select>
-
-        {/* Reset button if active */}
-        {(q || filter !== 'ALL' || categoryFilter !== 'ALL') && (
-          <button
-            className="secondaryButton"
-            onClick={resetFilters}
-            style={{ padding: '10px 14px' }}
-            title="Reset Filter"
+        {/* 1 Row for Filter Dropdowns */}
+        <div className="toolbarSelectRow">
+          {/* Category Filter */}
+          <select
+            value={categoryFilter}
+            onChange={e => setCategoryFilter(e.target.value)}
+            aria-label="Filter Kategori"
           >
-            <RotateCcw size={14} /> Reset
-          </button>
-        )}
+            <option value="ALL">Semua Kategori A2B</option>
+            {categories.map(c => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+
+          {/* Status Filter */}
+          <select
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            aria-label="Filter Status"
+          >
+            <option value="ALL">Semua Status</option>
+            <option value="NORMAL">🟢 Ready / Aman</option>
+            <option value="WARNING">🟡 Jadwal Servis</option>
+            <option value="OVERDUE">🔴 Breakdown / Rusak</option>
+          </select>
+
+          {/* Reset button if active */}
+          {(q || filter !== 'ALL' || categoryFilter !== 'ALL') && (
+            <button
+              className="secondaryButton resetBtnCompact"
+              onClick={resetFilters}
+              title="Reset Filter"
+            >
+              <RotateCcw size={14} />
+              <span className="hideOnMobile">Reset</span>
+            </button>
+          )}
+        </div>
 
         {/* View Mode Toggle (Tabel Padat vs Kartu Vertikal) */}
         <div className="viewToggleGroup" style={{ marginLeft: 'auto' }}>

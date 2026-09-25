@@ -294,7 +294,9 @@ html[data-theme='dark'] .statCard>div:first-child{background:#17313b}
 .grow{flex:1}
 .priorityRow strong,.priorityRow span{display:block}.priorityRow strong{font-size:15px}.priorityRow span{font-size:13px;color:var(--muted);margin-top:3px}
 .alignRight{text-align:right}.alignRight small{display:block;margin-top:5px;color:var(--muted);font-size:12px}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:850;white-space:nowrap}
+.priorityStatusCol{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:115px;flex-shrink:0}
+.priorityStatusCol small{display:block;margin-top:4px;color:var(--muted);font-size:11.5px;text-align:center}
+.badge{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:850;white-space:nowrap;text-align:center}
 .badge i{width:6px;height:6px;border-radius:50%;background:currentColor}
 .badge.normal{background:var(--green-soft);color:var(--green)}
 .badge.warning{background:var(--amber-soft);color:var(--orange)}
@@ -314,6 +316,9 @@ html[data-theme='dark'] .statCard>div:first-child{background:#17313b}
 .toolbar input,.toolbar select,.odometerForm input,.odometerForm textarea{width:100%;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:10px;padding:11px 12px;outline:0}
 .searchWrap input{padding-left:38px}.toolbar select{width:190px}
 .toolbar input:focus,.toolbar select:focus,.odometerForm input:focus,.odometerForm textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 12%,transparent)}
+.toolbarSelectRow{display:flex;gap:10px;align-items:center}
+.toolbarSelectRow select{width:180px}
+.resetBtnCompact{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;font-size:13px;border-radius:10px;cursor:pointer}
 .cardsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .vehicleCard{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);transition:.18s}
 .vehicleCard:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
@@ -429,9 +434,10 @@ html[data-theme='dark'] .modeOption.active{background:color-mix(in srgb,var(--te
 html[data-theme='dark'] .editBtn{background:rgba(21,33,42,.85);color:var(--teal)}
 html[data-theme='dark'] .deleteBtn{background:rgba(21,33,42,.85);color:var(--red)}
 
-/* ===== WhatsApp Alert Button (Light Skeuomorphism) ===== */
+/* ===== WhatsApp Alert Button (Vibrant WhatsApp Green & Urgent Overdue Red) ===== */
 .waAlertBtn,
 .waButton {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -444,32 +450,34 @@ html[data-theme='dark'] .deleteBtn{background:rgba(21,33,42,.85);color:var(--red
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.18s ease;
-  background: linear-gradient(180deg, #243542 0%, #17232c 100%);
+  background: linear-gradient(180deg, #25D366 0%, #1ea952 100%);
   color: #ffffff !important;
-  border: 1px solid #3b4e5b;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
-              0 3px 0 #0c141a,
-              0 4px 8px rgba(0, 0, 0, 0.25);
+  border: 1px solid #168a41;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+              0 3px 0 #10632e,
+              0 4px 10px rgba(37, 211, 102, 0.28);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 .waAlertBtn:hover,
 .waButton:hover {
-  background: linear-gradient(180deg, #2c4253 0%, #1d2c38 100%);
+  background: linear-gradient(180deg, #2ee26f 0%, #20b85a 100%);
   color: #ffffff !important;
-  border-color: #4e6375;
+  border-color: #1aa04b;
   transform: translateY(-1px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
-              0 4px 0 #0c141a,
-              0 6px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+              0 4px 0 #10632e,
+              0 6px 14px rgba(37, 211, 102, 0.38);
 }
 .waAlertBtn:active,
 .waButton:active {
   transform: translateY(2px);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4),
-              0 1px 0 #0c141a;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
+              0 1px 0 #10632e;
 }
 .waAlertBtn svg,
 .waButton svg {
   flex-shrink: 0;
+  color: #ffffff !important;
 }
 
 /* Full Width variant for Technician Card View */
@@ -485,25 +493,32 @@ html[data-theme='dark'] .deleteBtn{background:rgba(21,33,42,.85);color:var(--red
   font-size: 11.5px;
   border-radius: 7px;
   gap: 6px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
-              0 2px 0 #0c141a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
+              0 2px 0 #10632e;
 }
 
-/* Overdue Warning Emphasis */
+/* Overdue Warning Emphasis - Vivid Urgent Red */
 .waAlertBtn.overdue,
 .waOverdue {
-  border-color: #ef4444;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
-              0 3px 0 #0c141a,
-              0 0 0 1.5px rgba(239, 68, 68, 0.35);
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%) !important;
+  border-color: #991b1b !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35),
+              0 3px 0 #7f1d1d,
+              0 4px 12px rgba(239, 68, 68, 0.4) !important;
+  color: #ffffff !important;
 }
 .waAlertBtn.overdue:hover,
 .waOverdue:hover {
-  border-color: #f87171;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
-              0 4px 0 #0c141a,
-              0 0 0 2px rgba(239, 68, 68, 0.5),
-              0 6px 14px rgba(239, 68, 68, 0.3);
+  background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important;
+  border-color: #b91c1c !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
+              0 4px 0 #7f1d1d,
+              0 6px 14px rgba(239, 68, 68, 0.5) !important;
+}
+.waAlertBtn.overdue:active,
+.waOverdue:active {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35),
+              0 1px 0 #7f1d1d !important;
 }
 
 .waWarning {
@@ -615,6 +630,13 @@ html[data-theme='dark'] .deleteBtn{background:rgba(21,33,42,.85);color:var(--red
   .headerActions .skeuoDangerBtn{flex:1;min-width:100px;padding:8px 10px;font-size:12px;text-align:center;justify-content:center}
   .toolbar{flex-direction:column;align-items:stretch;gap:8px}
   .toolbar select{width:100%!important}
+  .toolbarSelectRow{display:flex!important;flex-direction:row!important;gap:8px!important;width:100%!important;align-items:center!important}
+  .toolbarSelectRow select{flex:1 1 0!important;min-width:0!important;width:auto!important;padding:9px 8px!important;font-size:12px!important;text-overflow:ellipsis!important}
+  .resetBtnCompact{padding:8px 10px!important;font-size:11.5px!important;flex-shrink:0!important}
+  .vehiclesPage .pageHeader{flex-direction:row!important;justify-content:space-between!important;align-items:center!important;margin-bottom:8px!important;gap:8px!important}
+  .vehiclesPage .pageHeader h1{font-size:16px!important;margin:0!important}
+  .vehiclesPage .pageHeader .headerActions{width:auto!important;flex:none!important}
+  .vehiclesPage .pageHeader .primaryButton{padding:6px 10px!important;font-size:11.5px!important;border-radius:9px!important}
   .searchWrap{width:100%!important}
   .viewToggleGroup{display:none!important}
   .vehicleMetrics{grid-template-columns:1fr 1fr}
@@ -1021,8 +1043,8 @@ html[data-theme='dark'] .viewToggleBtn.active{background:var(--navy-2);color:#ff
 /* ===== Print Stylesheet for Simple Clean Table Report ===== */
 @media print{
   @page{
-    size:A4 landscape;
-    margin:8mm 10mm;
+    size:auto;
+    margin:8mm 8mm;
   }
   :root, html, body, [data-theme='dark'], html[data-theme='dark'] {
     --bg: #ffffff !important;
@@ -1033,7 +1055,8 @@ html[data-theme='dark'] .viewToggleBtn.active{background:var(--navy-2);color:#ff
     --muted: #444444 !important;
   }
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;text-shadow:none!important;box-shadow:none!important}
-  html,body{background:#fff!important;color:#000!important;font-size:9pt!important;font-family:Arial,Helvetica,sans-serif!important}
+  html,body{background:#fff!important;color:#000!important;font-size:8.5pt!important;font-family:Arial,Helvetica,sans-serif!important;overflow:visible!important;height:auto!important}
+  .appShell{min-height:auto!important;height:auto!important;overflow:visible!important;width:100%!important;max-width:100%!important}
   .sidebar,.mobileNav,.topBar,.noPrint,.headerActions,.timeRangeSelectorSection,.historyToolbar,.dashboardHero,.resetBtn,.emptyHistory,.viewToggleGroup,.pagination,.historyStatsGrid,.statsGrid{display:none!important}
   .mainContent,.page,.historyPage{margin:0!important;padding:0!important;max-width:100%!important;width:100%!important;background:#fff!important}
   .printOnly{display:block!important}
